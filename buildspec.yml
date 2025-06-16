@@ -16,7 +16,7 @@ phases:
       - TAGS=$(aws ecr list-images --repository-name "$REPOSITORY_NAME" --query 'imageIds[*].imageTag' --output text | tr '\t' '\n' | grep '^v[0-9]*$' | sed 's/v//' | sort -n)
       - echo "Existing tags: $TAGS"
       - LAST_TAG=$(echo "$TAGS" | tail -n 1); if [ -z "$LAST_TAG" ]; then LAST_TAG=0; fi; NEXT_TAG=$((LAST_TAG + 1)); TAG="v${NEXT_TAG}"
-      - echo "Generated TAG: $TAG"
+      - echo "Generated TAG:$TAG"
       - echo "$REPOSITORY_URI:$TAG"
       - echo "$TAG" > tag.txt
       - sed -i "s@CONTAINER_IMAGE@$REPOSITORY_URI:$TAG@" hello-k8s.yml
